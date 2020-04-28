@@ -1,0 +1,25 @@
+pywren: 
+    storage_bucket: <BUCKET_NAME>
+    storage_backend: aliyun_oss
+    compute_backend: aliyun_fc
+    #rabbitmq_monitor: <True/False>
+    #remote_invoker: <True/False>
+    #data_cleaner: <True/False>
+    #runtime : <CUSTOM_MODULES_DIR>
+    #runtime_timeout: 600000
+    #runtime_memory: 256
+    #workers: <MAX_NUM_OF_WORKERS>
+
+aliyun_oss:
+    public_endpoint : <PUBLIC_ENDPOINT>
+    internal_endpoint : <INTRANET_ENDPOINT>
+    access_key_id : <ACCESS_KEY_ID>
+    access_key_secret : <ACCESS_KEY_SECRET>
+
+aliyun_fc:
+    public_endpoint : <PUBLIC_ENDPOINT>
+    access_key_id : <ACCESS_KEY_ID>
+    access_key_secret : <ACCESS_KEY_SECRET>
+
+#rabbitmq:
+    #amqp_url 	: <RABBIT_AMQP_URL>  # amqp://
