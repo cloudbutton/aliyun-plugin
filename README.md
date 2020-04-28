@@ -51,7 +51,7 @@ Assuming you already have installed PyWren:
 
 
 ## Custom runtime
-The PyWren handler uses a default runtime with some common modules to run your code (see /compute/backends/aliyun_fc/requirements.txt). However, if your code often requires a module that is not already included in the runtime, it will be convinient to build your custom runtime.\
+The PyWren handler uses a default runtime with some common modules to run your code (see [requirements.txt](/compute/backends/aliyun_fc/requirements.txt)). However, if your code often requires a module that is not already included in the runtime, it will be convinient to build your custom runtime.\
 The process is very simple. You only have to install your modules into a separate folder (via `pip install -t <CUSTOM_MODULES_DIR>`) and then provide it to PyWren by specifing it in the config file:
 ```yaml
   pywren:
