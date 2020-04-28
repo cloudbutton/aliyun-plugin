@@ -11,7 +11,7 @@ Cloudbutton toolkit plugin for Aliyun Function Compute and Aliyun Object Storage
  
 ## Plugin setup
 
-If you haven't installed `pywren-ibm-cloud` yet, you first have to [install](https://github.com/pywren/pywren-ibm-cloud/blob/master/README.md#pywren-setup) it.\
+If you have not installed `pywren-ibm-cloud` yet, you first have to [install](https://github.com/pywren/pywren-ibm-cloud/blob/master/README.md#pywren-setup) it.\
 Assuming you already have installed PyWren:
 
   1. Clone this repository.
@@ -50,7 +50,8 @@ Assuming you already have installed PyWren:
 
 
 ## Custom runtime
-The PyWren handler uses a default runtime with some common modules to run your code (see /compute/backends/aliyun_fc/requirements.txt). However, if your code often requires a module that is not already included in the runtime, you it will be convinient to build your custom runtime. To do so, it is very simple. You only have to install your modules into a separate folder (via `pip install -t <CUSTOM_MODULES_DIR>`) and then provide it to PyWren by specifing it in the config file:
+The PyWren handler uses a default runtime with some common modules to run your code (see /compute/backends/aliyun_fc/requirements.txt). However, if your code often requires a module that is not already included in the runtime, it will be convinient to build your custom runtime.\
+The process is very simple. You only have to install your modules into a separate folder (via `pip install -t <CUSTOM_MODULES_DIR>`) and then provide it to PyWren by specifing it in the config file:
 ```yaml
   pywren:
     ...
@@ -61,7 +62,7 @@ Or in your code:
   pw = pywren_ibm_cloud.function_executor(runtime='<CUSTOM_MODULES_DIR>')
 ```
 
-Note that the actual folder name in which you installed your modules will be used from now on to identify this runtime, thus after the first execution (which will install it to Aliyun FC) you can use that name to refer to the runtime instead of the full path. For example, with */home/me/mycustomruntime* as the directory of your custom modules, you will be able to use *mycustomruntime* to refer to it:
+Note that the actual folder name in which you installed your modules will be used from now on to identify this runtime, thus after the first execution (which will install it to Aliyun FC) you can use that name to refer to it instead of the full path. For example, with */home/me/mycustomruntime* as the directory of your custom modules, you will be able to use *mycustomruntime* to refer to it:
 ```yaml
   pywren:
     ...
@@ -71,3 +72,5 @@ Or:
 ```python
   pw = pywren_ibm_cloud.function_executor(runtime='mycustomruntime')
 ```
+
+Finally, remember that Aliyun Function Compute has [limits](https://www.alibabacloud.com/help/doc-detail/51907.htm?spm=a2c63.l28256.b99.152.1dd43c94NMby9d) regarding runtimes.
