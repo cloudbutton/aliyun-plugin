@@ -24,7 +24,7 @@ class AliyunFunctionComputeBackend:
         self.service_name = backend_config.SERVICE_NAME
         self.version = 'pywren_v{}'.format(__version__)
 
-        self.fc_client = fc2.Client(endpoint=self.config['endpoint'],
+        self.fc_client = fc2.Client(endpoint=self.config['public_endpoint'],
                                     accessKeyID=self.config['access_key_id'],
                                     accessKeySecret=self.config['access_key_secret'])
                                     
@@ -106,7 +106,7 @@ class AliyunFunctionComputeBackend:
         in order to know which runtimes are installed and which not.
         """
         function_name = self._format_function_name(docker_image_name, runtime_memory)
-        runtime_key = os.path.join(self.name, self.version, self.config['endpoint'], function_name)
+        runtime_key = os.path.join(self.name, self.version, self.config['public_endpoint'], function_name)
 
         return runtime_key
 

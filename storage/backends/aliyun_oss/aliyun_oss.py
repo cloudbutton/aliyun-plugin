@@ -1,5 +1,6 @@
 import logging
 from pywren_ibm_cloud.storage.utils import StorageNoSuchKeyError
+from pywren_ibm_cloud.utils import is_pywren_function
 import oss2
 
 logger = logging.getLogger(__name__)
@@ -10,7 +11,13 @@ class AliyunObjectStorageServiceBackend:
         self.bucket = bucket
         self.config = config
         self.auth = oss2.Auth(self.config['access_key_id'], self.config['access_key_secret'])
-        self.bucket = oss2.Bucket(self.auth, self.config['endpoint'], self.bucket)
+
+        if is_pywren_function():
+            self.endpoint = self.config['internal_endpoint']
+        else:
+            self.endpoint = self.config['public_endpoint']
+
+        self.bucket = oss2.Bucket(self.auth, self.endpoint, self.bucket)
 
 
     def put_object(self, bucket_name, key, data):
@@ -167,5 +174,5 @@ class AliyunObjectStorageServiceBackend:
         if self.bucket and self.bucket.bucket_name == bucket_name:
             bucket = self.bucket
         else:
-            bucket = oss2.Bucket(self.auth, self.config['endpoint'], bucket_name)
+            bucket = oss2.Bucket(self.auth, self.endpoint, bucket_name)
         return bucket
