@@ -8,6 +8,7 @@ Cloudbutton toolkit plugin for Aliyun Function Compute and Aliyun Object Storage
 
  - [pip](https://pypi.org/project/pip/) (updated)
  - aliyun-fc2 (`pip install aliyun-fc2`)
+ - oss2 (`pip install oss2`)
  
 ## Plugin setup
 
