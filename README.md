@@ -1,4 +1,4 @@
-# CloudButton Alibaba (Aliyun) Plugin
+# CloudButton Alibaba Cloud (Aliyun) Plugin
 Cloudbutton toolkit plugin for Aliyun Function Compute and Aliyun Object Storage Service.
 
 - CloudButton Project: [http://cloudbutton.eu/](http://cloudbutton.eu/)
