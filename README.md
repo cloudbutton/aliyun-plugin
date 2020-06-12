@@ -1,8 +1,8 @@
-# CloudButton Alibaba (Aliyun) Plugin
+# CloudButton Alibaba Cloud (Aliyun) Plugin
 Cloudbutton toolkit plugin for Aliyun Function Compute and Aliyun Object Storage Service.
 
 - CloudButton Project: [http://cloudbutton.eu/](http://cloudbutton.eu/)
-- CloudButton Toolkit: [https://github.com/pywren/pywren-ibm-cloud](https://github.com/pywren/pywren-ibm-cloud)
+- CloudButton Toolkit: [https://github.com/cloudbutton/cloudbutton](https://github.com/cloudbutton/cloudbutton)
 
 ## Requirements
 
@@ -12,15 +12,15 @@ Cloudbutton toolkit plugin for Aliyun Function Compute and Aliyun Object Storage
  
 ## Plugin setup
 
-If you have not installed `pywren-ibm-cloud` yet, you first have to [install](https://github.com/pywren/pywren-ibm-cloud/blob/master/README.md#pywren-setup) it.\
-Assuming you already have installed PyWren:
+If you have not installed `cloudbutton` yet, you first have to [install](https://github.com/cloudbutton/cloudbutton) it.\
+Assuming you already have installed Cloudbutton:
 
   1. Clone this repository.
   2. Execute the `install_plugin.py` script. 
 ```
   python3 install_plugin.py
 ```
-  3. Edit your local pywren config file (typically ~/.pywren_config)
+  3. Edit your local Cloudbutton config file (typically ~/.cloudbutton_config)
      with the new parameters for Aliyun.\
      See [config_tempate.yaml](/config_template.yaml)
 ```yaml
@@ -40,38 +40,38 @@ Assuming you already have installed PyWren:
    - `access_key_id`: Access Key Id.
    - `access_key_secret`: Access Key Secret. 
       
-      In addition, you have to specify a bucket that will be used internally by PyWren, and you have indicate that you want PyWren to use Aliyun OSS / FC:     
+      In addition, you have to specify a bucket that will be used internally by Cloudbutton, and you have indicate that you want Cloudbutton to use Aliyun OSS / FC:     
 ```yaml
-  pywren:
+  cloudbutton:
     storage_bucket : <BUCKET_NAME>
     storage_backend : aliyun_oss
     compute_backend : aliyun_fc
 ```
-  4. Use PyWren in your Python code.
+  4. Use the Cloudbutton toolkit in your Python code.
 
 
 ## Custom runtime
-The PyWren handler uses a default runtime with some common modules to run your code (see [requirements.txt](/compute/backends/aliyun_fc/requirements.txt)). However, if your code often requires a module that is not already included in the runtime, it will be convinient to build your custom runtime.\
-The process is very simple. You only have to install your modules into a separate folder (via `pip install -t <CUSTOM_MODULES_DIR>`) and then provide it to PyWren by specifing it in the config file:
+The Cloudbutton agent (handler) uses a default runtime with some common modules to run your code (see [requirements.txt](/compute/backends/aliyun_fc/requirements.txt)). However, if your code often requires a module that is not already included in the runtime, it will be convinient to build your custom runtime.\
+The process is very simple. You only have to install your modules into a separate folder (via `pip install -t <CUSTOM_MODULES_DIR>`) and then provide it to Cloudbutton by specifing it in the config file:
 ```yaml
-  pywren:
+  cloudbutton:
     ...
     runtime : <CUSTOM_MODULES_DIR>
 ```
 Or in your code:
 ```python
-  pw = pywren_ibm_cloud.function_executor(runtime='<CUSTOM_MODULES_DIR>')
+  pool = Pool(initargs={'runtime': '<CUSTOM_MODULES_DIR>'})
 ```
 
 Note that the actual folder name in which you installed your modules will be used from now on to identify this runtime, thus after the first execution (which will install it to Aliyun FC) you can use that name to refer to it instead of the full path. For example, with */home/me/mycustomruntime* as the directory of your custom modules, you will be able to use *mycustomruntime* to refer to it:
 ```yaml
-  pywren:
+  cloudbutton:
     ...
     runtime : mycustomruntime
 ```
 Or:
 ```python
-  pw = pywren_ibm_cloud.function_executor(runtime='mycustomruntime')
+  pool = Pool(initargs={'runtime': 'mycustomruntime'})
 ```
 
 Finally, remember that Aliyun Function Compute has [limits](https://www.alibabacloud.com/help/doc-detail/51907.htm?spm=a2c63.l28256.b99.152.1dd43c94NMby9d) regarding runtimes.

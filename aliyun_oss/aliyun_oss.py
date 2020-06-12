@@ -1,9 +1,10 @@
 import logging
-from pywren_ibm_cloud.storage.utils import StorageNoSuchKeyError
-from pywren_ibm_cloud.utils import is_pywren_function
+from cloudbutton.engine.backends.storage.utils import StorageNoSuchKeyError
+from cloudbutton.engine.utils import is_cloudbutton_function
 import oss2
 
 logger = logging.getLogger(__name__)
+logging.getLogger('urllib3').setLevel(logging.CRITICAL)
 
 class AliyunObjectStorageServiceBackend:
 
@@ -12,13 +13,15 @@ class AliyunObjectStorageServiceBackend:
         self.config = config
         self.auth = oss2.Auth(self.config['access_key_id'], self.config['access_key_secret'])
 
-        if is_pywren_function():
+        if is_cloudbutton_function():
             self.endpoint = self.config['internal_endpoint']
         else:
             self.endpoint = self.config['public_endpoint']
 
         self.bucket = oss2.Bucket(self.auth, self.endpoint, self.bucket)
 
+    def get_client(self):
+        return self
 
     def put_object(self, bucket_name, key, data):
         """
