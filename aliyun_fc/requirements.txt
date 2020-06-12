@@ -1,4 +1,4 @@
-# Pywren base modules
+# Cloudbutton base modules
 
 attrs==19.3.0
 Automat==20.2.0

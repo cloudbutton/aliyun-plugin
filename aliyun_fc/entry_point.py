@@ -17,10 +17,10 @@
 import os
 import json
 import logging
-from pywren_ibm_cloud.version import __version__
-from pywren_ibm_cloud.config import cloud_logging_config
-from pywren_ibm_cloud.function import function_handler
-from pywren_ibm_cloud.function import function_invoker
+from cloudbutton.version import __version__
+from cloudbutton.config import cloud_logging_config
+from cloudbutton.engine.agent import function_handler
+from cloudbutton.engine.agent import function_invoker
 
 cloud_logging_config(logging.INFO)
 logger = logging.getLogger('__main__')
@@ -30,10 +30,10 @@ def main(event, context):
     args = json.loads(event)
     os.environ['__PW_ACTIVATION_ID'] = context.request_id
     if 'remote_invoker' in args:
-        logger.info("PyWren v{} - Starting invoker".format(__version__))
+        logger.info("Cloudbutton v{} - Starting invoker".format(__version__))
         function_invoker(args)
     else:
-        logger.info("PyWren v{} - Starting execution".format(__version__))
+        logger.info("Cloudbutton v{} - Starting execution".format(__version__))
         function_handler(args)
 
     return {"Execution": "Finished"}
