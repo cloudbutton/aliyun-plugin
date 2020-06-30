@@ -1,3 +1,19 @@
+#
+# Copyright Cloudlab URV 2020
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
 import os
 import logging
 import shutil
@@ -6,9 +22,9 @@ import subprocess as sp
 import uuid
 import fc2
 from . import config as backend_config
-from cloudbutton.engine.utils import uuid_str
-from cloudbutton.version import __version__
-import cloudbutton
+from pywren_ibm_cloud.utils import uuid_str
+from pywren_ibm_cloud.version import __version__
+import pywren_ibm_cloud
 
 logger = logging.getLogger(__name__)
 
@@ -18,17 +34,17 @@ class AliyunFunctionComputeBackend:
     """
 
     def __init__(self, config):
-        self.log_level = os.getenv('CLOUDBUTTON_LOGLEVEL')
+        self.log_level = os.getenv('PYWREN_LOGLEVEL')
         self.name = 'aliyun_fc'
         self.config = config
         self.service_name = backend_config.SERVICE_NAME
-        self.version = 'cloudbutton_v{}'.format(__version__)
+        self.version = 'pywren_v{}'.format(__version__)
 
         self.fc_client = fc2.Client(endpoint=self.config['public_endpoint'],
                                     accessKeyID=self.config['access_key_id'],
                                     accessKeySecret=self.config['access_key_secret'])
                                     
-        log_msg = 'Cloudbutton v{} init for Aliyun Function Compute'.format(__version__)
+        log_msg = 'PyWren v{} init for Aliyun Function Compute'.format(__version__)
         logger.info(log_msg)
         if not self.log_level:
             print(log_msg)
@@ -38,9 +54,9 @@ class AliyunFunctionComputeBackend:
                        timeout=backend_config.RUNTIME_TIMEOUT_DEFAULT):
         """
         Creates a new runtime into Aliyun Function Compute
-        with the custom modules for cloudbutton
+        with the custom modules for pywren
         """
-        logger.info('Creating new Cloudbutton runtime for Aliyun Function Compute')
+        logger.info('Creating new Pywren runtime for Aliyun Function Compute')
 
         res = self.fc_client.list_services(prefix=self.service_name).data
         if len(res['services']) == 0:
@@ -128,7 +144,7 @@ class AliyunFunctionComputeBackend:
         if not is_custom:
             os.mkdir(handler_path)
 
-            # Add cloudbutton base modules
+            # Add pywren base modules
             logger.debug("Installing base modules (via pip install)")
             current_location = os.path.dirname(os.path.abspath(__file__))
             requirements_file = os.path.join(current_location, 'requirements.txt')
@@ -155,12 +171,12 @@ class AliyunFunctionComputeBackend:
         handler_file = os.path.join(current_location, 'entry_point.py')
         shutil.copy(handler_file, handler_path)
 
-        # Add cloudbutton module
-        module_location = os.path.dirname(os.path.abspath(cloudbutton.__file__))
-        dst_location = os.path.join(handler_path, 'cloudbutton')
+        # Add pywren module
+        module_location = os.path.dirname(os.path.abspath(pywren_ibm_cloud.__file__))
+        dst_location = os.path.join(handler_path, 'pywren_ibm_cloud')
 
         if os.path.isdir(dst_location):
-            logger.warn("Using user specified 'cloudbutton' module from the custom runtime folder. "
+            logger.warn("Using user specified 'pywren_ibm_cloud' module from the custom runtime folder. "
             "Please refrain from including it as it will be automatically installed anyway.")
         else:
             shutil.copytree(module_location, dst_location)
@@ -176,7 +192,7 @@ class AliyunFunctionComputeBackend:
         """
 
         logger.info('Extracting preinstalls for Aliyun runtime')
-        function_name = 'cloudbutton-extract-preinstalls-' + uuid_str()[:8]
+        function_name = 'pywren-extract-preinstalls-' + uuid_str()[:8]
 
         self.fc_client.create_function(serviceName=self.service_name, 
                                        functionName=function_name, 

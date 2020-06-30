@@ -1,4 +1,4 @@
-cloudbutton: 
+pywren: 
     storage_bucket: <BUCKET_NAME>
     storage_backend: aliyun_oss
     compute_backend: aliyun_fc

@@ -1,10 +1,28 @@
-import logging
-from cloudbutton.engine.backends.storage.utils import StorageNoSuchKeyError
-from cloudbutton.engine.utils import is_cloudbutton_function
+#
+# Copyright Cloudlab URV 2020
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
 import oss2
+import logging
+
+from pywren_ibm_cloud.storage.utils import StorageNoSuchKeyError
+from pywren_ibm_cloud.utils import is_pywren_function
 
 logger = logging.getLogger(__name__)
 logging.getLogger('urllib3').setLevel(logging.CRITICAL)
+
 
 class AliyunObjectStorageServiceBackend:
 
@@ -13,7 +31,7 @@ class AliyunObjectStorageServiceBackend:
         self.config = config
         self.auth = oss2.Auth(self.config['access_key_id'], self.config['access_key_secret'])
 
-        if is_cloudbutton_function():
+        if is_pywren_function():
             self.endpoint = self.config['internal_endpoint']
         else:
             self.endpoint = self.config['public_endpoint']
