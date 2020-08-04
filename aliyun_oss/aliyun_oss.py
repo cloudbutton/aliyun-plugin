@@ -60,7 +60,6 @@ class AliyunObjectStorageServiceBackend:
         except oss2.exceptions.NoSuchBucket:
             StorageNoSuchKeyError(bucket_name, '')
 
-
     def get_object(self, bucket_name, key, stream=False, extra_get_args={}):
         """
         Get object from OSS with a key. Throws StorageNoSuchKeyError if the given key does not exist.
@@ -84,7 +83,6 @@ class AliyunObjectStorageServiceBackend:
 
         except (oss2.exceptions.NoSuchKey, oss2.exceptions.NoSuchBucket):
             raise StorageNoSuchKeyError(bucket_name, key)
-
 
     def head_object(self, bucket_name, key):
         """
