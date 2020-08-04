@@ -28,6 +28,7 @@ import pywren_ibm_cloud
 
 logger = logging.getLogger(__name__)
 
+
 class AliyunFunctionComputeBackend:
     """
     A wrap-up around Aliyun Function Compute backend.
@@ -48,7 +49,6 @@ class AliyunFunctionComputeBackend:
         logger.info(log_msg)
         if not self.log_level:
             print(log_msg)
-
 
     def create_runtime(self, docker_image_name, memory=backend_config.RUNTIME_TIMEOUT_DEFAULT,
                        timeout=backend_config.RUNTIME_TIMEOUT_DEFAULT):
@@ -92,14 +92,12 @@ class AliyunFunctionComputeBackend:
 
         return metadata
 
-
     def delete_runtime(self, docker_image_name, memory):
         """
         Deletes a runtime
         """
         function_name = self._format_function_name(self.version, docker_image_name, memory)
         self.fc_client.delete_function(self.service_name, function_name)
-
 
     def invoke(self, docker_image_name, memory=None, payload={}):
         """
@@ -113,7 +111,6 @@ class AliyunFunctionComputeBackend:
                                              headers={'x-fc-invocation-type': 'Async'})
 
         return res.headers['X-Fc-Request-Id']
-
                         
     def get_runtime_key(self, docker_image_name, runtime_memory):
         """
@@ -126,7 +123,6 @@ class AliyunFunctionComputeBackend:
 
         return runtime_key
 
-
     def _format_function_name(self, version, runtime_name, runtime_memory):
         version = version.replace('.', '-')
 
@@ -136,7 +132,6 @@ class AliyunFunctionComputeBackend:
                                 .replace('-', '_').replace('.', '_')
 
         return '{}_{}_{}MB'.format(version, runtime_name, runtime_memory)
-
 
     def _create_function_handler_folder(self, handler_path, is_custom):
         logger.debug("Creating function handler folder in {}".format(handler_path))
@@ -181,10 +176,8 @@ class AliyunFunctionComputeBackend:
         else:
             shutil.copytree(module_location, dst_location)
 
-
     def _delete_function_handler_folder(self, handler_path):
         shutil.rmtree(handler_path)
-    
 
     def _generate_runtime_meta(self, handler_path):
         """
@@ -219,7 +212,3 @@ class AliyunFunctionComputeBackend:
 
         logger.info("Extracted metadata succesfully")
         return runtime_meta
-
-
-
-
