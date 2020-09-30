@@ -1,4 +1,4 @@
-# This pluguin has been merged to the official [Lithops repository](https://github.com/lithops-cloud/lithops)
+# This pluguin has been merged to the official [Lithops repo](https://github.com/lithops-cloud/lithops)
 
 -------
  
