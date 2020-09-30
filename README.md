@@ -1,16 +1,19 @@
-# IBM-PyWren Alibaba Cloud (Aliyun) Plugin
-IBM-PyWren plugin for Aliyun Function Compute and Aliyun Object Storage Service.
+# This pluguin has been merged to the official [Lithops repository](https://github.com/lithops-cloud/lithops)
 
-- CloudButton Project: [http://cloudbutton.eu/](http://cloudbutton.eu/)
-- IBM-Pywren: [https://github.com/pywren/pywren-ibm-cloud](https://github.com/pywren/pywren-ibm-cloud)
+-------
+ 
+## Lithops Alibaba Cloud (Aliyun) Plugin
+Lithops plugin for Aliyun Function Compute and Aliyun Object Storage Service.
 
-## Requirements
+- Lithops: [https://github.com/lithops-cloud/lithops](https://github.com/lithops-cloud/lithops)
+
+### Requirements
 
  - [pip](https://pypi.org/project/pip/) (updated)
  - aliyun-fc2 (`pip install aliyun-fc2`)
  - oss2 (`pip install oss2`)
  
-## Plugin setup
+### Plugin setup
 
 If you have not installed `IBM-Pywren` yet, you first have to [install](https://github.com/pywren/pywren-ibm-cloud) it.\
 Assuming you already have installed IBM-Pywren:
@@ -50,7 +53,7 @@ Assuming you already have installed IBM-Pywren:
   4. Use the Cloudbutton toolkit in your Python code.
 
 
-## Custom runtime
+### Custom runtime
 The Pywren handler uses a default runtime with some common modules to run your code (see [requirements.txt](/compute/backends/aliyun_fc/requirements.txt)). However, if your code often requires a module that is not already included in the runtime, it will be convinient to build your custom runtime.\
 The process is very simple. You only have to install your modules into a separate folder (via `pip install -t <CUSTOM_MODULES_DIR>`) and then provide it to Pywren by specifing it in the config file:
 ```yaml
